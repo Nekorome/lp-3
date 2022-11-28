@@ -1,21 +1,17 @@
 //SPDX-License-Identifier:MIT
-pragma solidity >=0.5.0 <0.9.0;
-
-contract EtherWallet{
-    address payable public owner;
-    
-    constructor(){
-        owner = payable(msg.sender); // by default msg.sender is not payable so we cast it   
+pragma solidity 0.4.22;
+contract Bank{
+    int bal;
+    constructor() public{
+        bal = 100;
     }
-
-    function Withdraw(uint _amount) public {
-        require(msg.sender == owner,"Only the owner can invoke this function");
-        payable(msg.sender).transfer(_amount);
+    function getbalance()view public returns (int){
+        return bal;
     }
-
-    function getBalance() external view returns(uint){
-        return address(this).balance;// return balance in this contract
+    function withDraw(int amt) public{
+        bal = bal - amt;
     }
-
-    receive() external payable {} // default function came after sol version 0.6.0 that allows contract to receive funds
+    function deposit(int amt) public{
+        bal = bal + amt;
+    }
 }
